@@ -1,4 +1,4 @@
-I for one truly love to separate different parts of my code, so adding dedicated controller classes was the first thing i did when playing around with nodejs. It is not at all a fancy Implementation that mimics big frameworks like Ruby on Rails or Django, but rather a small script that provides what I need at the moment. 
+I for one truly love to separate different parts of my code, so adding dedicated controller classes was the first thing i did when playing around with the express framework for nodejs. It is not at all a fancy implementation that tries to reimplement big frameworks like Ruby on Rails or Django, but rather a small script that provides what I need at the moment.
 
 Usage is really simple:
 
@@ -12,3 +12,4 @@ Thats more or less it. After starting your app using 'node app.js' you should be
 
 To write your own controllers simply add them to express-base-controller/controllers.
 
+The main idea was outlined at http://roman-weinberger.net/blog/adding-rails-style-controllers-to-the-express-framework-for-node-js/
