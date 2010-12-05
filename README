@@ -1,0 +1,14 @@
+I for one truly love to separate different parts of my code, so adding dedicated controller classes was the first thing i did when playing around with nodejs. It is not at all a fancy Implementation that mimics big frameworks like Ruby on Rails or Django, but rather a small script that provides what I need at the moment. 
+
+Usage is really simple:
+
+* Create a new express app
+	 express --sessions application-name
+* Checkout express-base-controller into your expressjs app folder
+* Add the following line to your app.js
+	 require('./express-base-controller/base_controller.js').init_routes(app);
+	
+Thats more or less it. After starting your app using 'node app.js' you should be able to access the example controller's index action using http://localhost:3000/example-controller and the test action using http://localhost:3000/example-controller/test.
+
+To write your own controllers simply add them to express-base-controller/controllers.
+
