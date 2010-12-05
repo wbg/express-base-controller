@@ -1,12 +1,20 @@
-module.exports = require('../base_controller').extend({
-	indexAction : function() {
+var ExampleController = function(request, result) {
+	BaseController.call(this, request, result);
+	
+	this.y = 0;
+	
+	this.indexAction = function() {
 		this.render('index', {
 			locals: {
 				title: 'Express'
 			}
 		});
-	},
-	testAction : function() {
-		this.send('test');
-	}
-});
+	};
+	
+	this.testAction = function() {
+		this.y += 1;
+		this.send(this.y+'');
+	};
+};
+
+exports.controller = ExampleController;

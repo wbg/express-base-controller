@@ -21,19 +21,41 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-module.exports = {
-	init : function(request, result) {
-		this.request = request;
-		this.result  = result;
-	},
-	init_routes : function(app) {
-		var fs = require('fs');
-		
-		fs.readdir(__dirname+'/controllers', function(err, files) {
-			files.forEach(function(file) {
+BaseController = function(request, result) {
+	this.request = request;
+	this.result  = result;
+	
+	this.render = function(template, options) {
+		return this.result.render(template, options);
+	};
+	
+	this.send = function(content) {
+		return this.result.send(content);
+	};
+	
+	this.extend = function(child) {
+	    for(var p in child) this[p] = child[p];
+		return this;
+	};
+	
+	this.before_filter = function() { return true; };
+	
+	this.after_filter = function() { };
+};
+
+// really simple routing
+exports.init_routes = function(app) {
+	var fs = require('fs');
+	// get all js files in controllers subfolder
+	fs.readdir(__dirname+'/controllers', function(err, files) {
+		files.forEach(function(file) {
+
+			if( /.js$/.test(file) ) {
+				mdl = require('./controllers/'+file);
+				
+				// add the standard route
 				app.get('/' + file.replace(/\.js$/, '') + '/:action?/:id?', function(request, result) {
-					var controller = require('./controllers/'+file);
-					controller.init(request, result);
+					var controller = new mdl.controller(request, result);
 					if( controller.before_filter() ) {
 						// build action parameter
 						if( !request.params.action ) { 
@@ -49,20 +71,10 @@ module.exports = {
 						}
 						controller.after_filter();
 					}
+					delete controller;
 				});
-			});
+			}
+
 		});
-	},
-	render : function(template, options) {
-		return this.result.render(template, options);
-	},
-	send : function(content) {
-		return this.result.send(content);
-	},
-	extend : function(child) {
-	    for(var p in child) this[p] = child[p];
-		return this;
-	},
-	before_filter : function() { return true; },
-	after_filter : function() { }
-}
+	});
+};
