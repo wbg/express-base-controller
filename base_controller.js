@@ -45,22 +45,54 @@ BaseController = function(request, result) {
 
 // really simple routing
 exports.init_routes = function(app) {
+   
 	var fs = require('fs');
+	
+	//Convert dash to camel string
+	function dashToCamel(str)
+   {
+      var nextUpper = false,
+          strOut = "";
+
+      for(var i in str)
+      {
+         if(str[i] == "-")
+         {
+            nextUpper = true;
+            continue;
+         }
+
+         if(nextUpper)
+         {
+            strOut += str[i].toUpperCase();
+         }
+         else
+         {
+            strOut += str[i];
+         }
+
+         nextUpper = false;
+      }
+
+      return strOut;
+   };
+   
 	// get all js files in controllers subfolder
 	fs.readdir(__dirname+'/controllers', function(err, files) {
 		files.forEach(function(file) {
 
 			if( /.js$/.test(file) ) {
-				mdl = require('./controllers/'+file);
-				
+			   
 				// add the standard route
 				app.get('/' + file.replace(/\.js$/, '') + '/:action?/:id?', function(request, result) {
+				   var mdl = require('./controllers/'+file);
 					var controller = new mdl.controller(request, result);
 					if( controller.before_filter() ) {
 						// build action parameter
 						if( !request.params.action ) { 
 							request.params.action = "indexAction"; 
 						} else {
+						   request.params.action = dashToCamel(request.params.action);
 							request.params.action += 'Action';
 						}
 						// try to call the action
