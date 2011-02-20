@@ -48,34 +48,11 @@ exports.init_routes = function(app) {
    
 	var fs = require('fs');
 	
-	//Convert dash to camel string
-	function dashToCamel(str)
-   {
-      var nextUpper = false,
-          strOut = "";
-
-      for(var i in str)
-      {
-         if(str[i] == "-")
-         {
-            nextUpper = true;
-            continue;
-         }
-
-         if(nextUpper)
-         {
-            strOut += str[i].toUpperCase();
-         }
-         else
-         {
-            strOut += str[i];
-         }
-
-         nextUpper = false;
-      }
-
-      return strOut;
-   };
+	// Convert dash to camel string (by James Roberts)
+	// http://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/
+	dashToCamel = function(){
+		return this.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase().replace('-','');});
+	};
    
 	// get all js files in controllers subfolder
 	fs.readdir(__dirname+'/controllers', function(err, files) {
