@@ -1,0 +1,6 @@
+#Eclipse
+.buildpath
+.project
+.settings/
+/medias/www/img/temp_integration
+

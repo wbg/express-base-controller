@@ -1,15 +1,27 @@
-I for one truly love to separate different parts of my code, so adding dedicated controller classes was the first thing i did when playing around with the express framework for nodejs. It is not at all a fancy implementation that tries to reimplement big frameworks like Ruby on Rails or Django, but rather a small script that provides what I need at the moment.
+I base on wbg express-base-controller to build a controller more useful and more powerful, it provides several functionnality like :
 
-Usage is really simple:
+* Calling action
+* Forward action
+* Auto render
+* DashToCamel writing
+* Boostrap
+* Custom route
+* etc..
 
-* Create a new express app
-	 express --sessions application-name
-* Checkout express-base-controller into your expressjs app folder
-* Add the following line to your app.js
-	 require('./express-base-controller/base_controller.js').init_routes(app);
-	
-Thats more or less it. After starting your app using 'node app.js' you should be able to access the example controller's index action using http://localhost:3000/example-controller and the test action using http://localhost:3000/example-controller/test.
+It take some inspiration from Zend Framework Controller that is so good.
 
-To write your own controllers simply add them to express-base-controller/controllers.
+You can add method to bootstrap.js to let clean the app.js file.
 
+You can add custom route easyly, there is an example in the boostrap.
+
+To write new controllers, just add them in the controllers folder.
+
+To run the demo you can simply clone the project and launch :
+
+node app.js
+
+You can test at the url : http://localhost:8080/
+
+
+The original project was initiated by Roman Weinberger
 The main idea was outlined at http://roman-weinberger.net/blog/adding-rails-style-controllers-to-the-express-framework-for-node-js/
