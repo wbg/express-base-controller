@@ -50,8 +50,8 @@ exports.init_routes = function(app) {
 	
 	// Convert dash to camel string (by James Roberts)
 	// http://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/
-	dashToCamel = function(){
-		return this.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase().replace('-','');});
+	dashToCamel = function(str) {
+		return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase().replace('-','');});
 	};
    
 	// get all js files in controllers subfolder
