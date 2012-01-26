@@ -21,16 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-BaseController = function(request, result) {
+BaseController = function(request, response) {
 	this.request = request;
-	this.result  = result;
+	this.response  = response;
 	
 	this.render = function(template, options) {
-		return this.result.render(template, options);
+		return this.response.render(template, options);
 	};
 	
 	this.send = function(content) {
-		return this.result.send(content);
+		return this.response.send(content);
 	};
 	
 	this.extend = function(child) {
@@ -61,9 +61,9 @@ exports.init_routes = function(app) {
 			if( /.js$/.test(file) ) {
 			   
 				// add the standard route
-				app.get('/' + file.replace(/\.js$/, '') + '/:action?/:id?', function(request, result) {
+				app.get('/' + file.replace(/\.js$/, '') + '/:action?/:id?', function(request, response) {
 				   var mdl = require('./controllers/'+file);
-					var controller = new mdl.controller(request, result);
+					var controller = new mdl.controller(request, response);
 					if( controller.before_filter() ) {
 						// build action parameter
 						if( !request.params.action ) { 
@@ -76,7 +76,7 @@ exports.init_routes = function(app) {
 						if( typeof controller[request.params.action] == 'function' ) {
 							controller[request.params.action]();
 						} else {
-							result.send(request.params.action + ' is not a controller action');
+							response.send(request.params.action + ' is not a controller action');
 						}
 						controller.after_filter();
 					}
