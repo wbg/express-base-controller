@@ -61,7 +61,7 @@ exports.init_routes = function(app) {
 			if( /.js$/.test(file) ) {
 			   
 				// add the standard route
-				app.get('/' + file.replace(/\.js$/, '') + '/:action?/:id?', function(request, response) {
+				app.get('/' + file.replace(/(^index)?\.js$/, '') + '/:action?/:id?', function(request, response) {
 				   var mdl = require('./controllers/'+file);
 					var controller = new mdl.controller(request, response);
 					if( controller.before_filter() ) {
